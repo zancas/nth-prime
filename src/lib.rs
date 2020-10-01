@@ -2,27 +2,6 @@ pub fn nth(n: u32) -> u32 {
 	const UPPER_BOUND: usize = 1000002;
 
 //make prime list
-// ---vector collection attempt---
-/*
-	let mut prime_distiller = Vec::new();
-	dbg!(&prime_distiller);
-	let mut i: u32 = 2;
-	while i <= UPPER_BOUND {
-		prime_distiller.push(i);
-		i = i + 1;
-	} 
-	
-	for num in prime_distiller {
-		if let Some(pos) = prime_distiller.iter().position(|x| *x == *num) {
-    			prime_distiller.remove(pos);
-		}
-		
-		let mut count: u32 = 1
-		while (count * num <= UPPER_BOUND) {
-			num + (num * count) 
-		}
-	}
-*/
 // ---boolean array collection---
 
 	//set array of upper_bound length to all true.
@@ -36,6 +15,7 @@ pub fn nth(n: u32) -> u32 {
 
 			// make factor variable, beginning with 2
 			let mut factor: usize = 2;
+			// test while factor variable is less than square root of number to be tested, to avoid repition (eg 2*4 = 8 and 4*2 = 8)
 			while factor as f32 <= (index_count as f32).sqrt(){
 
 				//this is the crashing macro ---->dbg!(factor);
@@ -51,31 +31,22 @@ pub fn nth(n: u32) -> u32 {
 			index_count = index_count + 1
 		}
 
-
-//find nth prime / create array of primes.
+//find nth prime 
 	//create empty Vec for pushing primes into.
 	let mut accumulated_primes = Vec::new();
+	// make prime_query_index variable, starting with 2 (to avoid including 0 and 1, which are not prime)
 	let mut prime_query_index: usize = 2;
+	// check entire range of tested numbers
 	while prime_query_index < UPPER_BOUND {
+		// if number previously was not converted to false by test above
 		if numbers[prime_query_index] == true {
+			//push the index (synchronized with prime_query_index) into accumulated_primes
 			accumulated_primes.push(prime_query_index as u32);
 		}
 		prime_query_index = prime_query_index + 1
 	} 
 
+// return requested prime by index provided as parameter
 accumulated_primes[n as usize]
 
-/* --------- thoughts----------
-	// hardcode or input upper bound?
-	// to check for factors could go on forever 2*2*2*2*2 etc never ends
-	// if *deleting* numbers and making set smaller (attrition), all you would know is it's not there so don't delete...
-	// Vec is an array that can be changed in length 
-	// Hashmap (set?) might be interesting to play with too
-	// the way I was thinking of this is more of an attritional *composite test*	
-	// in the case of an array (or a set?) you could just instantiate booleans, and the search could end there were no indicies; you could just iterate over the array or vec or whatever
-	// this seems faster probably? the indicies will represent the numbers themselves
-	// possible gotcha with indicies starting at [0]
-	// this could run a test for prime against every number (primality, probably/maybe slower??) or to do a compositing iterative marking of the numbers ...
-	// there is also trial division ... test prime integers from 2 to sqrt of n 
-*/
 }
